@@ -14,6 +14,13 @@ ActiveRecord::Schema[8.0].define(version: 2025_02_12_141208) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
+  create_table "game_rooms", force: :cascade do |t|
+    t.string "room_code", null: false
+    t.string "host_name", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "name"
     t.string "password"

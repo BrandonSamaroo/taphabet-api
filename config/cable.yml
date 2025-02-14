@@ -3,7 +3,9 @@
 # not a terminal started via bin/rails console! Add "console" to any action or any ERB template view
 # to make the web console appear.
 development:
-  adapter: async
+  adapter: postgresql
+  url: postgres://postgres:postgres@localhost/taphabet_api_development
+  channel_prefix: mygame_development
 
 test:
   adapter: test
