@@ -4,7 +4,7 @@ Rails.application.routes.draw do
   mount ActionCable.server => '/cable'
   get "up" => "rails/health#show", as: :rails_health_check
 
-  resources :users, only: [:index]
+  resources :game_rooms, only: [:create, :show, :update, :destroy]
 
   # Defines the root path route ("/")
   # root "posts#index"

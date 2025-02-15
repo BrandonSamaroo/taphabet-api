@@ -32,14 +32,23 @@ class GameRoomsController < ApplicationController
 
   def create_params
     params.require(:game_room).permit(
-      :room_code,
       :host_name,
+      :time_left,
+      :category,
+      :room_type,
+      :users => []
     )
   end
 
   def update_params
     params.require(:game_room).permit(
       :host_name,
+      :time_left,
+      :category,
+      :room_type,
+      :messages => [],
+      :letters_pressed => [],
+      :users => []
     )
   end
 end
