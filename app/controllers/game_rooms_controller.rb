@@ -1,9 +1,4 @@
 class GameRoomsController < ApplicationController
-  def show
-    @game_room = GameRoom.find(params[:id])
-    render json: @game_room
-  end
-
   def create
     @game_room = GameRoom.new(create_params)
     if @game_room.save
@@ -13,42 +8,24 @@ class GameRoomsController < ApplicationController
     end
   end
 
-  def update
-    @game_room = GameRoom.find(params[:id])
-    if @game_room.update(update_params)
-      render json: @game_room
+  def show
+    @game_room = GameRoom.find_by(room_id: params[:id])
+    if @game_room
+      render json: { id: @game_room.id }, status: :ok
     else
-      render json: @game_room.errors, status: :unprocessable_entity
+      render json: { error: "Game room not found" }, status: :not_found
     end
-  end
-
-  def destroy
-    @game_room = GameRoom.find(params[:id])
-    @game_room.destroy
-    head :no_content
   end
 
   private
 
   def create_params
     params.require(:game_room).permit(
-      :host_name,
-      :time_left,
-      :category,
-      :room_type,
-      :users => []
-    )
-  end
-
-  def update_params
-    params.require(:game_room).permit(
-      :host_name,
-      :time_left,
-      :category,
-      :room_type,
-      :messages => [],
-      :letters_pressed => [],
-      :users => []
+      :topic,
+      :time_per_answer,
+      :lobby_type,
+      :accessibility,
+      :max_players
     )
   end
 end

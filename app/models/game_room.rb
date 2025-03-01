@@ -1,14 +1,21 @@
 class GameRoom < ApplicationRecord
-  before_save :generate_room_code
+  has_many :session_users, dependent: :destroy
+  has_many :messages, dependent: :destroy
 
-  validates :host_name, presence: true
+  before_create :generate_room_code
+  before_create :set_defaults
+
+  validates :room_id, uniqueness: true
+
+   # enums not working for strings validate this later for lobby_type and accessibility
 
   private
 
   def generate_room_code
-    self.room_code = loop do
-      random_code = SecureRandom.random_number(10**8).to_s.rjust(8, '0')
-      break random_code unless GameRoom.exists?(room_code: random_code)
-    end
+    self.room_id = SecureRandom.hex(10)
+  end
+
+  def set_defaults
+    self.topic = self.topic.upcase_first
   end
 end
