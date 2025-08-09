@@ -18,7 +18,7 @@ class GameRoomChannel < ApplicationCable::Channel
         session_user_id: data['session_user_id']
       )
 
-      { message: "#{message.session_user.name}: #{message.body}" }
+      { message: {sender: message.session_user.name, body: message.body} }
     elsif data['letter_pressed']
       user = SessionUser.find(data['session_user_id'])
 
@@ -41,7 +41,7 @@ class GameRoomChannel < ApplicationCable::Channel
       end
 
       { is_active: game_room.is_active, rounds_played: game_room.rounds_played }
-    else 
+    else
       return
     end
 
